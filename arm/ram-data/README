@@ -1,0 +1,35 @@
+Install qemu
+~$ sudo apt-get install qemu
+
+Create an assembly file
+~$ add32.s
+
+Create object file using arm cross assembler
+~$ arm-linux-gnueabihf-as -o add32.o add32.s 
+
+Create elf file from object file using arm cross linker
+~$ arm-linux-gnueabihf-ld -T add32.lds -o add32.elf add32.o
+
+To look all the symbols in the elf file use arm nm
+~$ arm-linux-gnueabihf-nm add32.elf
+
+To create bin file
+~$ arm-linux-gnueabihf-objcopy -O binary add32.elf add32.bin
+
+Create a file that will act as the flash memory for the board
+~$ dd if=/dev/zero of=flash.bin bs=4096 count=4096
+
+Put add code in the flash.bin
+~$ dd if=add32.bin of=flash.bin bs=4096 conv=notrunc
+ 
+Start emulation
+~$ qemu-system-arm -M connex -pflash flash.bin -nographic -serial /dev/null
+
+To view registers in qemu
+(qemu) info registers
+
+To view memory
+(qemu)xp /4dw 0xA0000000
+
+To stop the emulation
+(qemu) stop
