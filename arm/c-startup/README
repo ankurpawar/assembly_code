@@ -1,0 +1,16 @@
+Install qemu
+~$ make all
+
+Start emulation
+~$ qemu-system-arm -M connex -pflash flash.bin -nographic -serial /dev/null
+
+To view registers in qemu
+(qemu) info registers
+
+To view memory
+(qemu)xp /6dw 0xA0000000
+
+To stop the emulation
+(qemu) stop
+
+
