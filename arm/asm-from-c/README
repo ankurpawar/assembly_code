@@ -1,0 +1,19 @@
+Install qemu
+~$ make all
+
+Start emulation
+~$ qemu-system-arm -M connex -pflash flash.bin -nographic -serial /dev/null
+
+To view registers in qemu
+(qemu) info registers
+
+Ouptut is stored in r0 register it will be 6.
+Register r0 will hold the return value of func
+
+To view memory
+(qemu)xp /6dw 0xA0000000
+
+To stop the emulation
+(qemu) stop
+
+
